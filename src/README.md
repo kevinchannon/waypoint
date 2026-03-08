@@ -48,8 +48,8 @@ wp install-shell
 ```
 This will:
 
-- Write a wrapper script to ~/.config/profile.d/wp.sh that defines the wp shell function (which can cd).
-- Ensure your ~/.bashrc sources ~/.config/profile.d/*.sh (idempotently).
+- Write a wrapper script to `~/.config/profile.d/wp.sh` that defines the wp shell function (which can cd).
+- Ensure your `~/.bashrc` sources `~/.config/profile.d/*.sh`.
 Then either start a new shell, or:
 
 ```bash
