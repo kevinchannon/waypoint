@@ -13,8 +13,6 @@ src/
   waypoint/
     __init__.py
     cli.py
-scripts/
-  waypoint.sh           # (optional) prototype shell wrapper
 test/
   test_wp_core.py
   test_install_shell.py
