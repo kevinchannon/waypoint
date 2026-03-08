@@ -1,0 +1,23 @@
+[project]
+name = "waypoint"
+version = "0.1.0"
+description = "Directory waypoint tool"
+readme = "src/README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "typer[all]",
+    "rich",
+]
+
+[project.scripts]
+wp = "waypoint.cli:app"
+
+[build-system]
+requires = ["uv_build>=0.10.9,<0.11.0"]
+build-backend = "uv_build"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "parameterized",
+]
