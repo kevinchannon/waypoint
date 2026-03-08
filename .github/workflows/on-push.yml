@@ -24,7 +24,7 @@ jobs:
           enable-cache: true
 
       - name: Sync dependencies (including dev)
-        run: uv sync --locked --all-groups
+        run: uv sync --locked --extra dev
 
       - name: Run tests
         run: uv run pytest
