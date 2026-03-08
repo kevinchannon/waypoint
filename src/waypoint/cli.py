@@ -12,7 +12,9 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-app = typer.Typer(help="Directory waypoint manager")
+from waypoint import __version__
+
+app = typer.Typer(help="Directory waypoint manager", no_args_is_help=True)
 console = Console()
 
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]*$")
@@ -59,17 +61,12 @@ wp() {
             # pass-through commands
             _wp_raw "$subcommand" "$@"
             ;;
+        --version)
+            _wp_raw --version
+            ;;
         *)
-            # convenience: `wp 3` or `wp proj` == `wp return 3` / `wp return proj`
-            local target_dir
-            target_dir="$(_wp_raw return "$subcommand" "$@")" || return
-
-            if [[ -d "$target_dir" ]]; then
-                cd "$target_dir" || return
-            else
-                echo "Target directory does not exist: $target_dir" >&2
-                return 1
-            fi
+            echo "Unrecognised command: $subcommand" >&2
+            return 1
             ;;
     esac
 }
@@ -219,6 +216,11 @@ def delete_waypoint(db_path: Path, selector: Selector) -> Waypoint:
     save_waypoints(db_path, waypoints)
     return waypoint
 
+
+def _version_callback(value: bool):
+    if value:
+        console.print(f"waypoint version {__version__}")
+        raise typer.Exit()
 
 @app.command("set")
 def cmd_set(
@@ -377,6 +379,20 @@ def cmd_install_shell() -> None:
     console.print(
         "Restart your shell or run: [bold]source ~/.bashrc[/bold] to activate `wp`."
     )
+
+
+@app.callback(invoke_without_command=True)
+def main(
+    ctx: typer.Context,
+    version: Optional[bool] = typer.Option(
+        None,
+        "--version",
+        "-v",
+        callback=_version_callback,
+        is_eager=True,
+        help="Show version and exit",
+    )):
+    pass
 
 
 if __name__ == "__main__":
