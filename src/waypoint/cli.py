@@ -48,7 +48,7 @@ wp() {
         return)
             # cd to a waypoint
             local target_dir
-            target_dir="$(_wp_raw return "$@")" || return
+            target_dir="$(_wp_raw get "$@")" || return
 
             if [[ -d "$target_dir" ]]; then
                 cd "$target_dir" || return
@@ -57,7 +57,7 @@ wp() {
                 return 1
             fi
             ;;
-        "" | list | set | del | clear | install-shell)
+        "" | list | get | set | del | clear | install-shell)
             # pass-through commands
             _wp_raw "$subcommand" "$@"
             ;;
@@ -253,8 +253,8 @@ def cmd_set(
         console.print(f"[green]Set anonymous waypoint[/green] -> {waypoint.directory}")
 
 
-@app.command("return")
-def cmd_return(
+@app.command("get")
+def cmd_get(
     target: Optional[str] = typer.Argument(
         None,
         help="Index or name of waypoint. Omit to use the last waypoint.",
@@ -264,7 +264,7 @@ def cmd_return(
     Print the directory for a waypoint.
 
     Intended usage in shell:
-      cd \"$(wp return <index|name>)\"
+      cd \"$(wp get <index|name>)\"
     """
     db_path = get_db_path()
 
@@ -297,7 +297,7 @@ def cmd_list() -> None:
         header_style="bold",
         show_edge=False,
         show_lines=False,
-        box=None,  # or box.MINIMAL if you want very light borders instead of none
+        box=None,
     )
 
     table.add_column("Index", justify="right")
