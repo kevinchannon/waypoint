@@ -285,12 +285,19 @@ def cmd_list() -> None:
     """
     db_path = get_db_path()
     waypoints = load_waypoints(db_path)
-
     if not waypoints:
         console.print("[yellow]No waypoints defined.[/yellow]")
         return
 
-    table = Table(title="Waypoints")
+    table = Table(
+        title=None,
+        show_header=True,
+        header_style="bold",
+        show_edge=False,
+        show_lines=False,
+        box=None,  # or box.MINIMAL if you want very light borders instead of none
+    )
+
     table.add_column("Index", justify="right")
     table.add_column("Name", justify="left")
     table.add_column("Directory", justify="left")
