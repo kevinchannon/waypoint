@@ -208,6 +208,17 @@ def delete_waypoint(db_path: Path, selector: Selector) -> Waypoint:
     waypoint = waypoints.pop(index)
     save_waypoints(db_path, waypoints)
     return waypoint
+    
+    
+def rename_waypoint(db_path: Path, old_selector: Selector, new_name: str) -> Waypoint:
+    validate_name(new_name)
+    waypoints = load_waypoints(db_path)
+    ensure_unique_name(waypoints, new_name)
+    index = _selector_to_index(waypoints, old_selector)
+    waypoint = waypoints[index]
+    waypoints.name = new_name
+    save_waypoints(db_path, waypoints)
+    return waypoint
 
 
 def _version_callback(value: bool):
