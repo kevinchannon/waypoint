@@ -282,6 +282,29 @@ def cmd_get(
     # IMPORTANT: Only print the directory, nothing else, to stdout.
     sys.stdout.write(waypoint.directory)
     sys.stdout.flush()
+    
+@app.command("rename")
+def cmd_rename(
+    target: str = typer.Argument(
+        None,
+        help="Index or name of waypoint to rename.",
+    ),
+    new_name: str = typer.Argument(
+        None,
+        help="New name for the waypoint"
+    )
+) -> None:
+    """
+    Rename a waypoint.
+    """
+    db_path = get_db_path()
+
+    selector: Selector = target
+    try:
+        rename_waypoint(db_path, selector, new_name)
+    except (IndexError, KeyError) as error:
+        typer.secho(str(error), err=True, fg=typer.colors.RED)
+        raise typer.Exit(code=1)
 
 
 @app.command("list")
