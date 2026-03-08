@@ -57,16 +57,9 @@ wp() {
                 return 1
             fi
             ;;
-        "" | list | get | set | del | clear | install-shell)
-            # pass-through commands
-            _wp_raw "$subcommand" "$@"
-            ;;
-        --version)
-            _wp_raw --version
-            ;;
         *)
-            echo "Unrecognised command: $subcommand" >&2
-            return 1
+            # Not "return", pass-through anything else for wp to handle
+            _wp_raw "$subcommand" "$@"
             ;;
     esac
 }
