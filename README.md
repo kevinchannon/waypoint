@@ -4,6 +4,29 @@ This document is for contributors / maintainers of `waypoint` (`wp`).
 
 ---
 
+Waypoint is a small CLI utility for creating “waypoints” in your filesystem: save directories and jump back to them quickly from your shell.
+
+Waypoints can be anonymous or named, and are stored in a per-user file so they persist across sessions.
+
+---
+
+## Motivation
+
+When working in large trees (monorepos, deep `build/` or `src/` hierarchies), `cd` + `pushd/popd` quickly become annoying:
+
+- You often want to “bookmark” a directory and come back much later.
+- You want multiple bookmarks, by index or by name.
+- You want a simple, shell-friendly interface that can control `cd` in your current shell.
+
+`wp` provides:
+
+- `wp set [name]` to record the current directory as a waypoint.
+- `wp list` to see all waypoints (with indices and names).
+- `wp <index|name>` to jump back.
+- Persistent storage in `~/.config/wp/waypoints.json`.
+
+---
+
 ## Project layout
 
 ```text
