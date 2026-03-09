@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for proper version detection
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -54,9 +54,10 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          # Uses trusted publisher authentication (no API token needed)
-          # Configure at https://pypi.org/manage/account/publishing/
-          packages-dir: dist/
+# This step is pending creation of the PyPi project
+#      - name: Publish to PyPI
+#        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          # Uses trusted publisher authentication (no API token needed)
+#          # Configure at https://pypi.org/manage/account/publishing/
+#          packages-dir: dist/
