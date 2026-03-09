@@ -36,7 +36,7 @@ fi
 WP_WRAPPER_SCRIPT = """\
 # wp shell integration
 wp() {
-    if [[ $1 == return ]]; then
+    if [[ $1 == return || $1 == r ]]; then
         shift
         local target_dir
 
@@ -216,6 +216,7 @@ def _version_callback(value: bool):
         raise typer.Exit()
 
 @app.command("set")
+@app.command("s")
 def cmd_set(
     name: Optional[str] = typer.Argument(
         None,
@@ -247,6 +248,7 @@ def cmd_set(
 
 
 @app.command("get")
+@app.command("g")
 def cmd_get(
     target: Optional[str] = typer.Argument(
         None,
@@ -273,6 +275,7 @@ def cmd_get(
     sys.stdout.flush()
     
 @app.command("rename")
+@app.command("rn")
 def cmd_rename(
     target: str = typer.Argument(
         None,
@@ -297,6 +300,7 @@ def cmd_rename(
 
 
 @app.command("list")
+@app.command("l")
 def cmd_list() -> None:
     """
     List all waypoints as a table.
@@ -327,6 +331,7 @@ def cmd_list() -> None:
 
 
 @app.command("del")
+@app.command("d")
 def cmd_del(
     target: str = typer.Argument(
         ...,
@@ -356,6 +361,7 @@ def cmd_del(
 
 
 @app.command("clear")
+@app.command("c")
 def cmd_clear() -> None:
     """
     Clear all waypoints.
