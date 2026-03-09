@@ -35,41 +35,22 @@ fi
 
 WP_WRAPPER_SCRIPT = """\
 # wp shell integration
-_wp_raw() {
-    if [[ $# -eq 0 ]]; then
-        command wp
+wp() {
+    if [[ $1 == return ]]; then
+        shift
+        local target_dir
+
+        target_dir=$(command wp get "$@") || return
+
+        [[ -d $target_dir ]] || {
+            printf 'Target directory does not exist: %s\n' "$target_dir" >&2
+            return 1
+        }
+
+        cd "$target_dir" || return
     else
         command wp "$@"
     fi
-}
-
-wp() {
-    local subcommand
-    subcommand="$1"
-    shift || true
-
-    case "$subcommand" in
-        return)
-            # cd to a waypoint
-            local target_dir
-            target_dir="$(_wp_raw get "$@")" || return
-
-            if [[ -d "$target_dir" ]]; then
-                cd "$target_dir" || return
-            else
-                echo "Target directory does not exist: $target_dir" >&2
-                return 1
-            fi
-            ;;
-        *)
-            # Not "return", pass-through anything else for wp to handle
-            if [[ -n "$subcommand" ]]; then
-                _wp_raw "$subcommand" "$@"
-            else
-                _wp_raw
-            fi
-            ;;
-    esac
 }
 """
 
