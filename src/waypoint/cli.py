@@ -216,7 +216,7 @@ def rename_waypoint(db_path: Path, old_selector: Selector, new_name: str) -> Way
     ensure_unique_name(waypoints, new_name)
     index = _selector_to_index(waypoints, old_selector)
     waypoint = waypoints[index]
-    waypoints.name = new_name
+    waypoint.name = new_name
     save_waypoints(db_path, waypoints)
     return waypoint
 
