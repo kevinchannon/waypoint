@@ -36,7 +36,11 @@ fi
 WP_WRAPPER_SCRIPT = """\
 # wp shell integration
 _wp_raw() {
-    command wp "$@"
+    if [[ $# -eq 0 ]]; then
+        command wp
+    else
+        command wp "$@"
+    fi
 }
 
 wp() {
@@ -59,7 +63,11 @@ wp() {
             ;;
         *)
             # Not "return", pass-through anything else for wp to handle
-            _wp_raw "$subcommand" "$@"
+            if [[ -n "$subcommand" ]]; then
+                _wp_raw "$subcommand" "$@"
+            else
+                _wp_raw
+            fi
             ;;
     esac
 }
