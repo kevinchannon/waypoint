@@ -1,6 +1,6 @@
 [project]
 name = "waypoint"
-version = "0.1.0"
+version = "0.1.1"
 description = "Directory waypoint tool"
 readme = "src/README.md"
 requires-python = ">=3.11"
