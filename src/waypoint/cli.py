@@ -36,7 +36,7 @@ fi
 WP_WRAPPER_SCRIPT = """\
 # wp shell integration
 wp() {
-    if [[ $1 == return || $1 == r ]]; then
+    if [[ $1 == return || $1 == r || $1 == go || $1 == g ]]; then
         shift
         local target_dir
 
@@ -248,7 +248,6 @@ def cmd_set(
 
 
 @app.command("get")
-@app.command("g")
 def cmd_get(
     target: Optional[str] = typer.Argument(
         None,
